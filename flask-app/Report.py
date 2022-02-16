@@ -29,6 +29,7 @@ class Report:
             "student_email": self.report_data['student']['email']['address'],
             "report_created": x.strftime("%d/%m/%Y"),
             "collected_errors": self.report_data['collectedErrors'],
+            "error_length" : len(self.report_data['collectedErrors']),
             "fixes": self.report_data['essayFix']
         }
 
