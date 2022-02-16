@@ -49,10 +49,10 @@ class Report:
                          out_pdf)
 
         # report_id = self.report_data['report']['id']
-        report_id = uuid.uuid4()
+        report_id = self.report_data['report']['name']
 
         client = Client()
-        output_file_name = f'reports/report-{report_id}.pdf'
+        output_file_name = f'reports/{report_id}.pdf'
         client.put_to_bucket(out_pdf, output_file_name)
 
         presigned_url = client.get_presigned_url(output_file_name)
