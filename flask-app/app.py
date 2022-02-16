@@ -1,9 +1,12 @@
 import json
 import os
 
+from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from Report import Report
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+load_dotenv(".env")
 app = Flask(__name__)
 
 
@@ -32,7 +35,6 @@ def pdf_handler():
         return jsonify(
             message="Key not found"
         ), 401
-
 
 # if __name__ == '__main__':
 #     app.run()
