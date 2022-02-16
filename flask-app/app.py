@@ -9,7 +9,7 @@ from Report import Report
 dir_path = os.path.dirname(os.path.realpath(__file__))
 load_dotenv(".env")
 app = Flask(__name__)
-cors = CORS(app, resources={r"/foo": {"origins": "*"}})
+cors = CORS(app, resources={r"/generate": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 
