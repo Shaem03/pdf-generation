@@ -1,6 +1,7 @@
+import json
 import os
 
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify
 from Report import Report
 
 app = Flask(__name__)
@@ -21,10 +22,10 @@ def pdf_handler():
 
         output_file_name = report.write_pdf()
 
-        response = send_file(
-            filename_or_fp=output_file_name,
-            attachment_filename=output_file_name
+        response = jsonify(
+            reportPresignedUrl=output_file_name
         ), 200
+
         return response
 
     else:
@@ -33,5 +34,5 @@ def pdf_handler():
         ), 401
 
 
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+#     app.run()

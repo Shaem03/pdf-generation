@@ -1,9 +1,12 @@
 import os
+import uuid
 
+import boto3
 import pdfkit
 from dateutil import parser
 from jinja2 import Environment, FileSystemLoader
 from dotenv import load_dotenv
+from Client import Client
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 load_dotenv(".env")
@@ -37,7 +40,21 @@ class Report:
         with open(f"{temp_path}{template_name}.html", "w") as fh:
             fh.write(output_from_parsed_template)
 
-        pdfkit.from_file(f'{temp_path}{template_name}.html',
-                         f'{temp_path}{template_name}.pdf')
+        # options = {
+        #     'margin-bottom': '0.75in'
+        # }
 
-        return f'{temp_path}{template_name}.pdf'
+        out_pdf = f'{temp_path}{template_name}.pdf'
+        pdfkit.from_file(f'{temp_path}{template_name}.html',
+                         out_pdf)
+
+        # report_id = self.report_data['report']['id']
+        report_id = uuid.uuid4()
+
+        client = Client()
+        output_file_name = f'reports/report-{report_id}.pdf'
+        client.put_to_bucket(out_pdf, output_file_name)
+
+        presigned_url = client.get_presigned_url(output_file_name)
+
+        return presigned_url
