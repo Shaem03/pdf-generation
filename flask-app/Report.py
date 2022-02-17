@@ -23,13 +23,15 @@ class Report:
 
     def write_pdf(self):
         template_name = "report"
-        x = parser.parse(self.report_data['report']['created'])
+        created_date = self.report_data['report']['created']
+
+        x = parser.parse(f"{created_date[0]}/{created_date[1]}/{created_date[2]}")
         response_rates = {
             "student_name": self.report_data['student']['fullname']['name'],
             "student_email": self.report_data['student']['email']['address'],
             "report_created": x.strftime("%d/%m/%Y"),
             "collected_errors": self.report_data['collectedErrors'],
-            "error_length" : len(self.report_data['collectedErrors']),
+            "error_length": len(self.report_data['collectedErrors']),
             "fixes": self.report_data['essayFix']
         }
 
@@ -56,6 +58,6 @@ class Report:
         output_file_name = f'reports/{report_id}.pdf'
         client.put_to_bucket(out_pdf, output_file_name)
 
-        presigned_url = client.get_presigned_url(output_file_name)
+        # presigned_url = client.get_presigned_url(output_file_name)
 
-        return presigned_url
+        return output_file_name
