@@ -2,25 +2,25 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
       integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
-<table  border="0" cellpadding="0" cellspacing="0" heigth="auto" style="background-color: #ffffff; border: 1px solid #e4e2e2; border-collapse: separate !important; border-radius: 10px; border-spacing: 0; color: #242128; margin: 0; padding: 40px;     margin-top: 5%;
+<table  border="0" cellpadding="0" cellspacing="0" heigth="auto" style="background-color: #ffffff !important; border: 1px solid #e4e2e2; border-collapse: separate !important; border-radius: 10px; border-spacing: 0; color: #242128 !important; margin: 0; padding: 40px;     margin-top: 5%;
 width: 100%;">
     <tbody>
     <tr>
         <td align="left" style="padding-bottom: 40px; border-top: 0; height: 100% !important; width: 100% !important;">
             <div style="font-weight: normal; line-height: 2; font-size: 14px;"><span
-                    style="color: #8A2BE2FF; font-weight: 700;"> {{ data['student_name'] }} </span><br><span
+                    style="color: #8A2BE2FF !important; font-weight: 700;"> {{ data['student_name'] }} </span><br><span
                     style="color: #8A2BE2FF !important; font-weight: 700;"> {{ data['student_email'] }} </span><br><span
-                    style="color: green !important; font-weight: 400;"> {{ data['report_created'] }} </span></div>
+                    style="color: #8A2BE2FF !important; font-weight: 400;"> {{ data['report_created'] }} </span></div>
         </td>
         <td align="right" style="padding-bottom: 40px; border-top: 0; height: 100% !important; width: 100% !important;">
             <img src="https://plum-report.s3.ap-southeast-1.amazonaws.com/Plum_Logo.png" style="width: 50px;"></td>
     </tr>
     <tr>
         <td colspan="2" style="padding-top: 10px; border-top: 1px solid #e4e2e2;">
-            <h5 style="color: #303030; font-size: 18px; line-height: 1.6; font-weight: 500;">Essay Question</h5>
+            <h5 style="color: #303030 !important; font-size: 18px; line-height: 1.6; font-weight: 500;">Essay Question</h5>
             <h2 style="padding-bottom: 20px; line-height: 1.4;"> Collated errors test assignment </h2>
             {% if data['error_length'] == 0 %}
-            <h3  style="color: green; font-size: 18px; line-height: 1.6; font-weight: 500;">No Corrections</h3>
+            <h3  style="color: green !important; font-size: 18px; line-height: 1.6; font-weight: 500;">No Corrections</h3>
             {% else %}
             <table class="table table-striped table-bordered ng-star-inserted">
                 <thead>
@@ -42,16 +42,16 @@ width: 100%;">
                 </tbody>
             </table>
             <!---->
-            <h3 style="color: #303030; font-size: 18px; line-height: 1.6; font-weight: 500;" class="ng-star-inserted">
+            <h3 style="color: #303030 !important; font-size: 18px; line-height: 1.6; font-weight: 500;" class="ng-star-inserted">
                 Corrections</h3>
             <!----><!---->
             <ol style="font-size: 14px; padding-bottom: 20px; padding-left: 20px; line-height: 1.6;">
                 {% for value in data['fixes'] %}
                 <li style="margin-bottom: 5px;" class="ng-star-inserted">
                     <p>
-                        <span style="color: red;"> {{ value['word'] }} </span> - <span style="color: green;"> {{ value['replacedWord'] }} </span><span
+                        <span style="color: red !important;"> {{ value['word'] }} </span> - <span style="color: green !important;"> {{ value['replacedWord'] }} </span><span
 
-                            style="   background-color: #A4CBD67F; padding: 5px; margin-left: 10px; font-weight: 400; font-size: 0.75rem; color: grey;"> {{ value['fixType'] }} </span>
+                            style="   background-color: #A4CBD67F !important; padding: 5px; margin-left: 10px; font-weight: 400; font-size: 0.75rem; color: grey !important;"> {{ value['fixType'] }} </span>
                         <!---->
                     </p>
                 </li>
