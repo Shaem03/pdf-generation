@@ -26,13 +26,19 @@ class Report:
         created_date = self.report_data['report']['created']
 
         x = parser.parse(f"{created_date[0]}/{created_date[1]}/{created_date[2]}")
+        # x = parser.parse(created_date)
+
         response_rates = {
+            "report_name": self.report_data['report']['name'],
             "student_name": self.report_data['student']['fullname']['name'],
             "student_email": self.report_data['student']['email']['address'],
             "report_created": x.strftime("%d/%m/%Y"),
             "collected_errors": self.report_data['collectedErrors'],
             "error_length": len(self.report_data['collectedErrors']),
-            "fixes": self.report_data['essayFix']
+            "fixes": self.report_data['essayFix'],
+            "language_score": self.report_data['essay']['languageScore'],
+            "content_score": self.report_data['essay']['contentScore'],
+            "feedback": self.report_data['essay']['feedback']
         }
 
         env = Environment(loader=FileSystemLoader(jinja_template))
