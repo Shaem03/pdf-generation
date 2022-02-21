@@ -1,7 +1,4 @@
 import os
-import uuid
-
-import boto3
 import pdfkit
 from dateutil import parser
 from jinja2 import Environment, FileSystemLoader
