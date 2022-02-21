@@ -7,3 +7,4 @@ python-dotenv
 flask===1.1.2
 gunicorn
 flask-cors
+itsdangerous==2.0.1
