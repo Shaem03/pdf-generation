@@ -112,7 +112,7 @@ class Report:
                          out_pdf)
 
         # report_id = self.report_data['report']['id']
-        report_id = uuid.uuid4()
+        report_id = self.report_data["content"][0]["student"]["fullname"]["name"]
 
         output_file_name = f'reports-common/{report_id}.pdf'
         self.client.put_to_bucket(out_pdf, output_file_name)
