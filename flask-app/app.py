@@ -38,5 +38,27 @@ def pdf_handler():
         ), 401
 
 
+@app.route('/common', methods=['POST'])
+def common():
+    x_api_key = request.headers.get('x-api-key')
+    if x_api_key == os.environ.get('X_API_KEY'):
+        req_body = request.get_json()
+
+        report = Report(req_body)
+
+        output_file_name = report.write_common()
+
+        response = jsonify(
+            reportPresignedUrl=output_file_name
+        ), 200
+
+        return response
+
+    else:
+        return jsonify(
+            message="Key not found"
+        ), 401
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(port=6000)

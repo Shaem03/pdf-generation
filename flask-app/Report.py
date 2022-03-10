@@ -1,4 +1,7 @@
+import itertools
 import os
+import uuid
+
 import pdfkit
 from dateutil import parser
 from jinja2 import Environment, FileSystemLoader
@@ -17,6 +20,8 @@ class Report:
 
     def __init__(self, reports):
         self.report_data = reports
+        self.env = Environment(loader=FileSystemLoader(jinja_template))
+        self.client = Client()
 
     def write_pdf(self):
         template_name = "report"
@@ -38,17 +43,12 @@ class Report:
             "feedback": self.report_data['essay']['feedback']
         }
 
-        env = Environment(loader=FileSystemLoader(jinja_template))
-        template = env.get_template(f'{template_name}_sample.html')
+        template = self.env.get_template(f'{template_name}_sample.html')
 
         output_from_parsed_template = template.render(data=response_rates)
 
         with open(f"{temp_path}{template_name}.html", "w") as fh:
             fh.write(output_from_parsed_template)
-
-        # options = {
-        #     'margin-bottom': '0.75in'
-        # }
 
         out_pdf = f'{temp_path}{template_name}.pdf'
         pdfkit.from_file(f'{temp_path}{template_name}.html',
@@ -57,10 +57,64 @@ class Report:
         # report_id = self.report_data['report']['id']
         report_id = self.report_data['report']['name']
 
-        client = Client()
         output_file_name = f'reports/{report_id}.pdf'
-        client.put_to_bucket(out_pdf, output_file_name)
+        self.client.put_to_bucket(out_pdf, output_file_name)
 
         # presigned_url = client.get_presigned_url(output_file_name)
+
+        return output_file_name
+
+    def write_common(self):
+        common_arr = {}
+        template_name = "common_error"
+        collected_errors_rrr = []
+        for val in self.report_data['content']:
+            for vv in val["collectedErrors"]:
+                vv["name"] = val['report']['name']
+                collected_errors_rrr.append(vv)
+
+        # collesscted_errors = [val['collectedErrors'] for val in self.report_data['content']]
+        # merged = list(itertools.chain(*collesscted_errors))
+        err_types = set([val['fixType'] for val in collected_errors_rrr])
+        for val in err_types:
+            all_words = list(filter(lambda person: person['fixType'] == val, collected_errors_rrr))
+            sorted_words = sorted(all_words, key=lambda d: d['replacedWord'])
+            set_common_words = {}
+
+            for value in sorted_words:
+                replaced_word = value['replacedWord']
+                corr_err = list(filter(lambda person: person['replacedWord'] == replaced_word, sorted_words))
+
+                if replaced_word in set_common_words:
+                    cont = set_common_words[replaced_word]["count"] + value['count']
+                    set_common_words[replaced_word]["count"] = cont
+                else:
+                    set_common_words[replaced_word] = {
+                        "all": corr_err,
+                        "count": value['count']
+                    }
+
+            common_arr[val] = set_common_words
+
+        response_rates = {
+            "collected_errors": common_arr,
+        }
+
+        template = self.env.get_template(f'{template_name}_sample.html')
+
+        output_from_parsed_template = template.render(data=response_rates)
+
+        with open(f"{temp_path}{template_name}.html", "w") as fh:
+            fh.write(output_from_parsed_template)
+
+        out_pdf = f'{temp_path}{template_name}.pdf'
+        pdfkit.from_file(f'{temp_path}{template_name}.html',
+                         out_pdf)
+
+        # report_id = self.report_data['report']['id']
+        report_id = uuid.uuid4()
+
+        output_file_name = f'reports-common/{report_id}.pdf'
+        self.client.put_to_bucket(out_pdf, output_file_name)
 
         return output_file_name
