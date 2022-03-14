@@ -3,49 +3,6 @@
 
 <table class="table table-striped table-bordered">
     <tbody>
-    <div>
-        <tr style="display: flex;">
-            <td scope="row" colspan="4"
-                style="padding-left: 30px; width: 100%; text-transform: capitalize; background: #4518716b !important; color: #000; font-weight: 800;">
-                duplication
-            </td>
-        </tr>
-        <tr style="display: grid;">
-            <td colspan="4">
-                <table class="table mb-0">
-                    <thead>
-                    <tr>
-                        <th scope="col">Word</th>
-                        {% if data['col_name'] %}
-                            <th scope="col">Assignment</th>
-                        {% else %}
-                            <th scope="col">Student</th>
-                        {% endif %}
-                        <th scope="col">Examples</th>
-                        <th scope="col">Count</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-
-                    <tr>
-                        <td scope="row"> Bus</td>
-                        <td></td>
-                        <td></td>
-                        <td style="color: green;"> 10</td>
-                    </tr>
-                    <tr>
-                        <td scope="row"></td>
-                        <td> Apple Test</td>
-                        <td> Bus Bus =&gt; Bus</td>
-                        <td> 10</td>
-                    </tr>
-
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-    </div>
     {% for key, val in data['collected_errors'].items() %}
     <div>
         <tr style="display: flex;">
@@ -57,7 +14,18 @@
         <tr style="display: grid;">
             <td colspan="4">
                 <table class="table mb-0">
-
+                    <thead>
+                    <tr>
+                        <th scope="col">Word</th>
+                        {% if data['col_name'] %}
+                        <th scope="col">Assignment</th>
+                        {% else %}
+                        <th scope="col">Student</th>
+                        {% endif %}
+                        <th scope="col">Examples</th>
+                        <th scope="col">Count</th>
+                    </tr>
+                    </thead>
                     <tbody>
                     {% for key1, val1 in val.items() %}
                         <tr>
