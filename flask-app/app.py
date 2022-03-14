@@ -46,7 +46,7 @@ def common():
 
         report = Report(req_body)
 
-        output_file_name = report.write_common()
+        output_file_name = report.write_common(request.args.to_dict())
 
         response = jsonify(
             reportPresignedUrl=output_file_name

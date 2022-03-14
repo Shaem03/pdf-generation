@@ -16,7 +16,11 @@
                     <thead>
                     <tr>
                         <th scope="col">Word</th>
-                        <th scope="col">Assignment</th>
+                        {% if data['col_name'] %}
+                            <th scope="col">Assignment</th>
+                        {% else %}
+                            <th scope="col">Student</th>
+                        {% endif %}
                         <th scope="col">Examples</th>
                         <th scope="col">Count</th>
                     </tr>

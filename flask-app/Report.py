@@ -64,13 +64,14 @@ class Report:
 
         return output_file_name
 
-    def write_common(self):
+    def write_common(self, report_type):
         common_arr = {}
         template_name = "common_error"
         collected_errors_rrr = []
         for val in self.report_data['content']:
             for vv in val["collectedErrors"]:
-                vv["name"] = val['report']['name']
+                vv["name"] = val['report']['name'] if report_type['student'] != "null" else val["student"]["fullname"][
+                    "name"]
                 collected_errors_rrr.append(vv)
 
         # collesscted_errors = [val['collectedErrors'] for val in self.report_data['content']]
@@ -98,6 +99,7 @@ class Report:
 
         response_rates = {
             "collected_errors": common_arr,
+            "col_name": report_type['student'] != "null"
         }
 
         template = self.env.get_template(f'{template_name}_sample.html')
