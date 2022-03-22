@@ -68,9 +68,11 @@ class Report:
         common_arr = {}
         template_name = "common_error"
         collected_errors_rrr = []
-        title_name = self.report_data['content'][0]['student']['fullname']['name'] if report_type[
-                                                                                          'student'] != "null" else \
-            self.report_data['content'][0]["report"]['name']
+        if report_type['student'] != "null":
+            title_name = self.report_data['content'][0]['student']['fullname']['name']
+        else:
+            assignment_name = self.report_data['content'][0]["report"]['name'].split("_")
+            title_name = " ".join(assignment_name[:-1])
 
         for val in self.report_data['content']:
             for vv in val["collectedErrors"]:
