@@ -76,8 +76,9 @@ class Report:
 
         for val in self.report_data['content']:
             for vv in val["collectedErrors"]:
-                vv["name"] = val['report']['name'] if report_type['student'] != "null" else val["student"]["fullname"][
-                    "name"]
+                assig_name = val['report']['name'].split("_")
+                vv["name"] = " ".join(assig_name[:-1]) if report_type['student'] != "null" else \
+                    val["student"]["fullname"]["name"]
                 collected_errors_rrr.append(vv)
 
         # collesscted_errors = [val['collectedErrors'] for val in self.report_data['content']]
