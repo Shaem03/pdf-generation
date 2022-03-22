@@ -1,7 +1,12 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
       integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
-<table class="table table-striped table-bordered">
+<div style="font-weight: normal; line-height: 2; font-size: 14px;"><span
+        style="color: #8A2BE2FF !important; font-weight: 700;"> {{ data['title'] }} - Aggregated Report </span>
+
+
+</div>
+<table class="table table-striped table-bordered" style="margin-top:20px!important">
     <tbody>
     {% for key, val in data['collected_errors'].items() %}
     <div>

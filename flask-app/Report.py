@@ -68,6 +68,10 @@ class Report:
         common_arr = {}
         template_name = "common_error"
         collected_errors_rrr = []
+        title_name = self.report_data['content'][0]['student']['fullname']['name'] if report_type[
+                                                                                          'student'] != "null" else \
+            self.report_data['content'][0]["report"]['name']
+
         for val in self.report_data['content']:
             for vv in val["collectedErrors"]:
                 vv["name"] = val['report']['name'] if report_type['student'] != "null" else val["student"]["fullname"][
@@ -98,6 +102,7 @@ class Report:
             common_arr[val] = set_common_words
 
         response_rates = {
+            "title": title_name,
             "collected_errors": common_arr,
             "col_name": report_type['student'] != "null"
         }
